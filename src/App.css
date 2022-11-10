@@ -5,12 +5,14 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.nav-bar {
-  border: 2px solid white;
+.todo-card {
+  border: 3px solid white;
+  margin: 12px;
+  padding: 12px;
 }

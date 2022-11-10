@@ -14,3 +14,4 @@ const GlobalLayout = (props) => {
 }
 
 export default GlobalLayout;
+
