@@ -26,6 +26,7 @@ const ToDoFormPage = (props)=> {
         setPriority(e.target.value)
 
     }
+    const navigate = useNavigate()
 
     const handleCreateToDo = async () => {
         setShouldRefetch(true)
@@ -45,6 +46,7 @@ const ToDoFormPage = (props)=> {
         })
 
         setShouldRefetch(false)
+        navigate('/')
     }
 
     return (
@@ -56,7 +58,7 @@ const ToDoFormPage = (props)=> {
                     <Form.Label>Title</Form.Label>
                     <Form.Control onChange={handleTitle} type="text" name="title" placeholder="Enter To do title" />
                     <Form.Label>Description</Form.Label>
-                    <Form.Control onChange={handleDescription} type="textArea" name="description" placeholder="Enter description" />
+                    <Form.Control as="textarea" onChange={handleDescription} type="textArea" name="description" placeholder="Enter description" />
                     <Form.Label>Priority</Form.Label>
                     <Form.Select onChange={handlePriority} aria-label="Default select example" name="priority">
                         <option> </option>
