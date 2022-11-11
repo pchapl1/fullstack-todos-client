@@ -11,8 +11,8 @@ function App() {
   const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT
 
   const [toDoList, setToDoList] = useState([])
-  console.log("=================================")
-  console.log(toDoList)
+
+  const [shouldRefecth, setShouldRefetch] = useState(false)
 
   const router = createBrowserRouter([
     {
@@ -21,12 +21,12 @@ function App() {
       children: [
         {
           index: true,
-          element: <HomePage urlEndpoint={urlEndpoint} toDoList={toDoList}/>
+          element: <HomePage setShouldRefetch={setShouldRefetch} urlEndpoint={urlEndpoint} toDoList={toDoList}/>
         },
         {
           index: true,
           path: "/todo-form",
-          element: <ToDoFormPage urlEndpoint={urlEndpoint}/>
+          element: <ToDoFormPage setShouldRefetch={setShouldRefetch} urlEndpoint={urlEndpoint}/>
         }
       ]
     }
@@ -47,7 +47,7 @@ function App() {
 
     fetchToDos()
 
-  }, [])
+  }, [shouldRefecth])
   
   return (
     <div className="App">

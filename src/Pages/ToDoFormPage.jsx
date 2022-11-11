@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 
 const ToDoFormPage = (props)=> {
 
-    const { urlEndpoint } = props
+    const { urlEndpoint, setShouldRefetch} = props
 
     const [ title, setTitle ] = useState("")
     const [ description, setDescription ] = useState("")
@@ -28,7 +28,8 @@ const ToDoFormPage = (props)=> {
     }
 
     const handleCreateToDo = async () => {
-        
+        setShouldRefetch(true)
+
         // const navigate = useNavigate();
 
         const response = await fetch(`${urlEndpoint}/todos/create-one`, {
@@ -43,7 +44,7 @@ const ToDoFormPage = (props)=> {
 			}
         })
 
-
+        setShouldRefetch(false)
     }
 
     return (

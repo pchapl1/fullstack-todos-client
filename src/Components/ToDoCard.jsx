@@ -1,22 +1,44 @@
 import React from "react";
 import Button from 'react-bootstrap/Button';
+import { useState } from "react";
 
 const ToDoCard = (props) => {
-    const { toDo, urlEndpoint } = props
+    const { toDo, urlEndpoint, setShouldRefetch } = props
+    const [isComplete, setIsComplete] = useState(toDo.isComplete)
 
-    const handleSetToDoComplete = async (props) => {
-        // const [isComplete, setIsComplete] = useState()
-        const response = await fetch(`${urlEndpoint}/todos/update-one/:id`, {
+
+    const handleSetToDoComplete = async () => {
+        
+        setShouldRefetch(true)
+
+        if (toDo.isComplete === true) {
+            setIsComplete(false)
+        } else {
+            setIsComplete(true)
+        }
+        
+        const response = await fetch(`${urlEndpoint}/todos/update-one/${toDo.id}`, {
             method: 'PUT',
             body: JSON.stringify({
-                // title,
-                // description,
-                // priority
+                isComplete
             }),
             headers: {
 				'Content-Type': 'application/json'
 			}
         })
+        setShouldRefetch(false)
+    }
+
+    const handleDeleteToDo = async ()=> {
+        setShouldRefetch(true)
+
+        const response = await fetch(`${urlEndpoint}/todos/delete-one/${toDo.id}`, {
+            method: 'DELETE'
+        })
+
+
+        setShouldRefetch(false)
+        
     }
 
     return (
@@ -25,12 +47,24 @@ const ToDoCard = (props) => {
             <p>ID: {toDo.id}</p>
             <p>Description: {toDo.description}</p>
             <p>Priority: {toDo.priority}</p>
-            <p>Is Complete: {toDo.isComplete}</p>
-            {/* <p>Creation Date: {toDo.creationDate}</p>
-            <p>Last Modified{toDo.lastModified}</p> */}
+            { toDo.isComplete === true && 
+                <p>Is Complete</p>
+            }
+            { toDo.isComplete === true && 
             <p>Completed Date: {toDo.completedDate}</p>
+
+            }
+            {
+                toDo.isComplete === false &&
+                <p>Not complete</p>
+            }
+            <p>Creation Date: {toDo.creationDate.toString()}</p>
+            <p>Last Modified: {toDo.lastModified.toString()}</p>
             <Button onClick={handleSetToDoComplete} variant="primary">
                     Toggle Complete
+            </Button>
+            <Button onClick={handleDeleteToDo} variant="primary">
+                    Delete To Do
             </Button>
         </div>
     )
